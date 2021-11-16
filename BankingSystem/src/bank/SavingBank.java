@@ -1,10 +1,8 @@
 package bank;
 
-import account.Account;
 import account.SavingAccount;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 
@@ -33,11 +31,11 @@ public class SavingBank extends Bank {
 
             // 목표금액이 0일 때 에러 발생
             if (account.getGoalAmount().equals(BigDecimal.valueOf(0))) {
-                throw new Exception("입금액을 입력하세요.");
+                throw new Exception("목표금액을 입력하세요.");
             }
             // 목표금액이 0보다 작을 때 에러 발생
             if (account.getGoalAmount().compareTo(BigDecimal.valueOf(0)) < 0) {
-                throw new Exception("입금액을 확인해주세요.");
+                throw new Exception("목표금액을 확인해주세요.");
             }
 
             seq += 1;

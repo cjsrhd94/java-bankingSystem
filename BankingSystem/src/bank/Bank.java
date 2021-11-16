@@ -37,6 +37,7 @@ public class Bank {
                 account = findAccount(accNo);
                 if (account == null) {
                     System.out.println("\n존재하지 않는 계좌입니다. 다시 입력해주세요");
+                    continue;
                 }
                 if (account != null && account.getCategory().equals("N")) {
                     break;
@@ -55,17 +56,16 @@ public class Bank {
             BigDecimal amount = scanner.nextBigDecimal();
 
             // TODO: interestCalculators 이용하여 이자 조회 및 출금
-            BigDecimal interestRatio = null;
+            BigDecimal interest = null;
             if (account.getCategory().equals("N")) {
-                interestRatio = hashmap.get("N").getInterest(account.getBalance());
-            }
-            if (account.getCategory().equals("S")) {
-                interestRatio = hashmap.get("S").getInterest(account.getBalance());
+                interest = hashmap.get("N").getInterest(account.getBalance());
+            } else if (account.getCategory().equals("S")) {
+                interest = hashmap.get("S").getInterest(account.getBalance());
             }
 
             account.withdraw(amount, "출금");
 
-            System.out.printf("%s원이 출금되었습니다. 잔액: %s원 | 이자: %s원", df.format(amount), df.format(account.getBalance()), df.format(account.getBalance().multiply(interestRatio).setScale(0, RoundingMode.CEILING)));
+            System.out.printf("%s원이 출금되었습니다. 잔액: %s원 | 이자: %s원", df.format(amount), df.format(account.getBalance()), df.format((interest).setScale(0, RoundingMode.CEILING)));
 
         } catch (InputMismatchException e) {
             System.out.println("숫자를 입력해주세요. 메뉴로 돌아갑니다.");
@@ -120,17 +120,24 @@ public class Bank {
         // 계좌번호 채번
         // 계좌번호는 "0000"+증가한 seq 포맷을 가진 번호입니다.
         //TODO
-        Account account = new Account();
+        try {
+            Account account = new Account();
 
-        System.out.print("이름: ");
-        account.setOwner(scanner.next());
+            System.out.print("이름: ");
+            account.setOwner(scanner.next());
 
-        seq += 1;
-        account.setAccNo("0000" + seq);
+            seq += 1;
+            account.setAccNo("0000" + seq);
 
-        System.out.printf("\n%s님 계좌가 발급되었습니다.\n", account.getOwner());
+            System.out.printf("\n%s님 계좌가 발급되었습니다.\n", account.getOwner());
 
-        return account;
+            return account;
+
+        } catch (Exception e) {
+            System.out.println("오류가 발생했습니다.");
+            scanner.nextLine();
+            return createAccount();
+        }
     }
 
     public Account findAccount(String accNo) {

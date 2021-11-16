@@ -1,7 +1,5 @@
 package account;
 
-import bank.Bank;
-
 import java.math.BigDecimal;
 
 //TODO: SavingAccount는 Account에서 상속을 받습니다.
@@ -19,7 +17,8 @@ public class SavingAccount extends Account {
         super(accNo, owner, balance);
         this.goalAmount = goalAmount;
         this.setCategory("S");
-        this.isActive();
+//        this.isActive();
+        this.setActive(true);
     }
 
     //TODO: GoalAmount getter 구현

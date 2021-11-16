@@ -11,6 +11,7 @@ import java.util.Scanner;
 public class BankTest {
     private static Scanner scanner = new Scanner(System.in);
     private static Bank bank = new Bank();
+
     public static void main(String[] args) throws Exception {
 
         CentralBank centralBank = CentralBank.getInstance();
